@@ -10,9 +10,9 @@ struct SegTree {
     vector<T> tree; // Root has index 1; the 0th element is unused.
     
     // CHANGE THIS SEGMENT
-    const T id = -INFINITY;
+    const T id = 0;
     T operation(T a, T b) {
-        return max(a, b);
+        return a + b;
     }
     // UNTIL HERE
 
@@ -49,6 +49,14 @@ struct SegTree {
             index >>= 1;
         }
     }
+
+    void print() {
+        for (size_t i = 1; i < tree.size(); ++i) {
+            cout << tree[i] << " ";
+            //if (__builtin_popcount(i - 1) < 2) cout << endl;
+        }
+        cout << endl;
+    }
 };
 
 
@@ -64,7 +72,23 @@ int main() {
     }
     SegTree st(arr);
 
-    
+    while (true) {
+        st.print();
+
+        char c;
+        cin >> c;
+        if (c == 'q') {
+            int l, r;
+            cin >> l >> r;
+            cout << st.query(l, r + 1) << endl;
+        }
+
+        if (c == 'u') {
+            int p, v;
+            cin >> p >> v;
+            st.assign(p, v);
+        }
+    }
 
     return 0;
 }
