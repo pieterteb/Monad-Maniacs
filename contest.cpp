@@ -440,6 +440,7 @@ struct suffix_array {
                           Number Theory
 \****************************************************************/
 
+/* TESTED */
 /* Computes gcd(a, b) and finds x, y such that ax + by = gcd(a, b). */
 long long extgcd(long long a, long long b, long long &x, long long &y) {
     x = 1, y = 0;
@@ -459,6 +460,7 @@ long long extgcd(long long a, long long b, long long &x, long long &y) {
     return a;
 }
 
+/* TESTED */
 /* Returns the smallest non-negative x such that x ≡ r[i] mod m[i] for all i; assumes m[i] are pairwise coprime. */
 long long crt(vector<long long>& r, vector<long long>& m) {
     long long crt = 0, N = 1, x, y;
@@ -470,6 +472,7 @@ long long crt(vector<long long>& r, vector<long long>& m) {
     return crt < 0 ? crt + N : crt; // Ensure crt is positive.
 }
 
+/* TESTED */
 /* Returns the smallest non-negative x such that x ≡ r[i] mod m[i] for all i; works with non-coprime m[i], returns -1 if no solution exists. */
 long long crt(vector<long long>& r, vector<long long>& m) {
     long long crt = 0, N = 1, g, x, y;
@@ -482,6 +485,7 @@ long long crt(vector<long long>& r, vector<long long>& m) {
     return crt < 0 ? crt + N : crt; // Ensure crt is positive.
 }
 
+/* TESTED */
 /* Returns (a^b) mod m. */
 unsigned long long modpow(unsigned long long a, unsigned long long b, unsigned long long m) {
     unsigned long long res = 1;
@@ -494,6 +498,7 @@ unsigned long long modpow(unsigned long long a, unsigned long long b, unsigned l
     return res;
 }
 
+/* TESTED */
 /* Returns true if n is prime, false otherwise. */
 bool prime(unsigned long long n) {
     if (n < 3 || n % 2 == 0) return n == 2;
@@ -514,6 +519,7 @@ bool prime(unsigned long long n) {
     return true;
 }
 
+/* TESTED */
 /* Computes non-trivial factor of n. */
 unsigned long long pollards_rho(unsigned long long n) {
     if (n % 2 == 0) return 2;
@@ -530,6 +536,7 @@ unsigned long long pollards_rho(unsigned long long n) {
     }
 }
 
+/* TESTED */
 /* Computes factors of n. */
 void factorize(unsigned long long n, map<unsigned long long, int>& fs) {
     if (n == 1) return;
