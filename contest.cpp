@@ -136,8 +136,8 @@ public:
 \****************************************************************/
 
 /* Performs binary search on a and returns the index of t, or -1 if not found. */
-int binsrch(vector<int>& a, int t) {
-    int l = 0, r = a.size() - 1, m;
+unsigned long long binsrch(vector<unsigned long long>& a, unsigned long long t) {
+    unsigned long long l = 0, r = a.size() - 1, m;
     while (l <= r) {
         m = l + (r - l) / 2;
         if (a[m] == t)
@@ -175,15 +175,15 @@ void dfs(vector<vector<int>>& adj, int src) {
 void bfs(vector<vector<int>>& adj, int src) {
     queue<int> q;
     q.push(src);
-    vector<bool> seen(adj.size(), false);
-    seen[src] = true;
+    vector<int> dist(adj.size(), -1);
+    dist[src] = 0;
     int u;
     while (!q.empty()) {
         u = q.front();
         q.pop();
         for (auto v: adj[u]) {
-            if (!seen[v]) {
-                seen[v] = true;
+            if (dist[v] == -1) {
+                dist[v] = dist[u] + 1;
                 q.push(v);
             }
         }
@@ -249,23 +249,24 @@ vector<int> toposort(int n, vector<vector<int>> &adj) {
     return res;
 }
 
-/* Returns the length of the shortest path from start to every node, or -1 if no path to that node exists. */
-vector<int> dijkstra(vector<vector<pair<int, int>>>& a, int s) {
-    vector<int> d(a.size(), INT_MAX); // distance
+/* Returns the length of the shortest path from start to every node, or -1 if no path to that node exists. 
+    adj[a] contains a list of pairs { b, w }, meaning a is adjacent to b with weight w */
+vector<int> dijkstra(vector<vector<pair<int, int>>>& adj, int src) {
+    vector<int> dist(adj.size(), INT_MAX); // distance
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q; // { distance, node }
-    d[s] = 0;
-    q.emplace(0, s);
+    dist[src] = 0;
+    q.emplace(0, src);
     while (!q.empty()) {
         auto [du, u] = q.top(); q.pop();
-        if (du != d[u]) continue;
-        for (auto [v, w] : a[u]) {
-            if (d[v] > d[u] + w) {
-                d[v] = d[u] + w;
-                q.emplace(d[v], v);
+        if (du != dist[u]) continue;
+        for (auto [v, w] : adj[u]) {
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                q.emplace(dist[v], v);
             }
         }
     }
-    return d;
+    return dist;
 }
 
 /* Returns shortest distance from node s to node i. Format of node is adj[from][i] = { to, weight }. */
