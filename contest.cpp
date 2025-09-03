@@ -41,6 +41,8 @@ struct UF {
 };
 
 
+
+
 /* Segment tree struct. */
 template<typename T>
 struct SegmentTree {
