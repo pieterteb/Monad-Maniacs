@@ -474,7 +474,7 @@ long long crt(vector<long long>& r, vector<long long>& m) {
 
 /* TESTED */
 /* Returns the smallest non-negative x such that x ≡ r[i] mod m[i] for all i; works with non-coprime m[i], returns -1 if no solution exists. */
-long long crt(vector<long long>& r, vector<long long>& m) {
+long long crt_npc(vector<long long>& r, vector<long long>& m) {
     long long crt = 0, N = 1, g, x, y;
     for (int i = 0; i < m.size(); ++i) {
         g = extgcd(N, m[i], x, y);
@@ -505,7 +505,7 @@ bool prime(unsigned long long n) {
     if (n == 3 || n == 5 || n == 13 || n == 19 || n == 73 || n == 193 || n == 407521 || n == 299210837) return true; /// two
     int s = __countr_zero(n - 1), pr[] = { 2, 325, 9375, 28178, 450775, 9780504, 1795265022 }; /// two
     // int s = __countr_zero(n - 1), pr[] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 }; // one
-    unsigned long long d = n - 1 >> s, x, y;
+    unsigned long long d = (n - 1) >> s, x, y;
     for (int p : pr) {
         // if (p >= n) break; // one
         x = modpow(p, d, n);
