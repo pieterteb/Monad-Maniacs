@@ -2,30 +2,21 @@
 
 using namespace std;
 
-/* Iterative depth-first search implementation. */
-void dfs(vector<vector<int>>& adj, int source) {
-    vector<bool> visited(adj.size(), false);
-    visited[source] = true;
-    stack<int> st;
-    st.push(source);
-    while (!st.empty()) {
-        source = st.top();
-        st.pop();
-        for (auto node : adj[source]) {
-            if (!visited[node]) {
-                visited[node] = true;
-                st.push(node);
-            }
-        }
-    }
-}
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<bool> vb;
 
-/* Recursive depth-first search implementation. */
-void dfs(vector<vector<int>>& adj, int source, vector<bool>& visited) {
-    for (auto node : adj[source]) {
-        if (!visited[node]) {
-            visited[node] = true;
-            dfs(adj, node, visited);
+void dfs(vvi& adj, int src) {
+    vi st; st.push_back(src);
+    vb seen(adj.size(), false); seen[src] = true;
+    int u;
+    while (!st.empty()) {
+        u = st.back(); st.pop_back();
+        for (auto v: adj[u]) {
+            if (!seen[v]) {
+                seen[v] = true;
+                st.push_back(v);
+            }
         }
     }
 }

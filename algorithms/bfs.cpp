@@ -2,19 +2,21 @@
 
 using namespace std;
 
-/* Breadth-first search implementation. */
-void bfs(vector<vector<int>>& adj, int source) {
-    vector<bool> visited(adj.size(), false);
-    visited[source] = true;
-    queue<int> q;
-    q.push(source);
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<bool> vb;
+typedef queue<int> qi;
+
+void bfs(vvi& adj, int src) {
+    qi q; q.push(src);
+    vb seen(adj.size(), false); seen[src] = true;
+    int u;
     while (!q.empty()) {
-        source = q.front();
-        q.pop();
-        for (auto node : adj[source]) {
-            if (!visited[node]) {
-                visited[node] = true;
-                q.push(node);
+        u = q.front(); q.pop();
+        for (auto v: adj[u]) {
+            if (!seen[v]) {
+                seen[v] = true;
+                q.push(v);
             }
         }
     }
