@@ -231,20 +231,16 @@ int kruskal(vector<vector<int>>& edges, int n) {
 /* Toposort khan. */
 vector<int> toposort(int n, vector<vector<int>> &adj) {
     vector<int> res, stack, p(n);
-    
-    for (int u = 0; u < n; u++) for (int child : adj[u]) p[child]++;
-    for (int u = 0; u < n; u++) if (p[u] == 0) stack.push_back(u);
-
+    for (int u = 0; u < n; ++u) for (int child : adj[u]) ++p[child];
+    for (int u = 0; u < n; ++u) if (p[u] == 0) stack.push_back(u);
     while (!stack.empty()) {
         int u = stack.back(); stack.pop_back();
         res.push_back(u);
-
         for (int v : adj[u]) {
-            p[v]--;
+            --p[v];
             if (p[v] == 0) stack.push_back(v);
         }
     }
-
     if (res.size() < n) return {-1};
     return res;
 }
@@ -278,7 +274,7 @@ vector<int> bellman_ford(vector<vector<pair<int, int>>>& adj, int s) {
     return dist;    
 }
 
-/* Returns shortest distance from node i to node j. */
+/* Returns shortest distance from node i to node j. Takes a matix of weights as input. s*/
 vector<vector<int>> floyd_warshall(vector<vector<int>>& weight) {
     int n = weight.size();
     vector<vector<int>> dist = weight;
@@ -328,18 +324,18 @@ T max_flow(vector<vector<int>>& adj, vector<vector<T>> capacity, int source, int
     return flow;
 }
 
-/* Tarjan SCC. */
+/* Tarjan SCC. Initialization:
+u = curnum = compc = 0; num = lowln = comp {-1}; stack = {};
+*/
 void SCC(int u, vector<vector<int>> &adj, int &curnum, int &compc, vector<int> &num, vector<int> &lowln, vector<int> &comp, vector<int> &stack) {
     stack.push_back(u);
     lowln[u] = num[u] = curnum++;
-
     for (int v : adj[u]) {
         if (num[v] == -1) {
             SCC(v, adj, curnum, compc, num, lowln, comp, stack);
             lowln[u] = min(lowln[u], lowln[v]);
         } else if (comp[v] == -1) lowln[u] = min(lowln[u], lowln[v]);
     }
-
     if (num[u] == lowln[u]) {
         for (int v = -1; v != u;) {
             v = stack.back(); stack.pop_back();
