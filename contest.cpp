@@ -12,7 +12,7 @@ struct UF {
     int setc;
     UF(int n) : par(n), rank(n, 0), setc(n) {
         for (int i = 0; i < n; ++i) par[i] = i;
-    };
+    }
 
     int root(int u) {
         int r = par[u];
@@ -42,11 +42,11 @@ struct UF {
 
 
 /* Segment Tree data structure. */
-template<typename T>
+template <typename T>
 struct SegTree {
     int elementc;
-    vector<T> tree; // Root has index 1; the 0th element is unused.
-    
+    vector<T> tree;  // Root has index 1; the 0th element is unused.
+
     // CHANGE THIS SEGMENT
     const T id = 0;
     T operation(T a, T b) {
@@ -59,12 +59,12 @@ struct SegTree {
 
     /* Build a segment tree from arr. */
     SegTree(vector<T>& arr) : elementc(arr.size()), tree(2 * arr.size(), id) {
-        copy(arr.begin(), arr.end(), tree.begin() + elementc);      // Copy the array values to the bottom of the tree
-        for (int i = elementc - 1; i > 0; --i)
-            tree[i] = operation(tree[2 * i], tree[2 * i + 1]);
+        copy(arr.begin(), arr.end(), tree.begin() + elementc);  // Copy the array values to the bottom of the tree
+        for (int i = elementc - 1; i > 0; --i) tree[i] = operation(tree[2 * i], tree[2 * i + 1]);
     }
 
-    /* Returns cumulative result of applying segtree.operation on [left, right). Returns segtree.identity if the interval is empty. */
+    /* Returns cumulative result of applying segtree.operation on [left, right). Returns segtree.identity if the
+     * interval is empty. */
     T query(unsigned left, unsigned right) {
         T result = id;
         left += elementc;
@@ -72,7 +72,7 @@ struct SegTree {
         while (left < right) {
             if (left & 1) result = operation(result, tree[left++]);
             if (right & 1) result = operation(result, tree[--right]);
-            left >>= 1; // Dividing by 2
+            left >>= 1;  // Dividing by 2
             right >>= 1;
         }
         return result;
@@ -95,20 +95,21 @@ class SegTreeR {
     SegTreeR *left, *right;
     int from, to, value;
 
-    SegTreeR(const vector<int> &arr, int l, int r) : left(NULL), right(NULL), from(l), to(r), value(0) {
-        if (l == r) value = arr[l];
+    SegTreeR(const vector<int>& arr, int l, int r) : left(NULL), right(NULL), from(l), to(r), value(0) {
+        if (l == r)
+            value = arr[l];
         else {
-            int m = (l + r)/2;
-            left = new SegTreeR(arr, l, m);
+            int m = (l + r) / 2;
+            left  = new SegTreeR(arr, l, m);
             right = new SegTreeR(arr, m + 1, r);
             value += left->value;
             value += right->value;
         }
     }
 
-public:
-    SegTreeR(vector<int> &arr) { 
-        *this = SegTreeR(arr, 0, arr.size() - 1); 
+   public:
+    SegTreeR(vector<int>& arr) {
+        *this = SegTreeR(arr, 0, arr.size() - 1);
     }
 
     int sum(int l, int r) {
@@ -116,11 +117,13 @@ public:
         if (l > to || r < from) return 0;
         return left->sum(l, r) + right->sum(l, r);
     }
-    
+
     int update(int i, int val) {
         if (i > to || i < from) return value;
-        if (from == to) value  = val;
-        else value = left->update(i, val) + right->update(i, val);
+        if (from == to)
+            value = val;
+        else
+            value = left->update(i, val) + right->update(i, val);
         return value;
     }
 
@@ -163,7 +166,7 @@ void dfs(vector<vector<int>>& adj, int src) {
     while (!st.empty()) {
         u = st.top();
         st.pop();
-        for (auto v: adj[u]) {
+        for (auto v : adj[u]) {
             if (!seen[v]) {
                 seen[v] = true;
                 st.push(v);
@@ -181,7 +184,7 @@ void bfs(vector<vector<int>>& adj, int src) {
     while (!q.empty()) {
         u = q.front();
         q.pop();
-        for (auto v: adj[u]) {
+        for (auto v : adj[u]) {
             if (dist[v] == -1) {
                 dist[v] = dist[u] + 1;
                 q.push(v);
@@ -201,7 +204,7 @@ bool bipartite(vector<vector<int>>& adj) {
         while (st.size()) {
             int u = st.top();
             st.pop();
-            for (auto v: adj[u]) {
+            for (auto v : adj[u]) {
                 if (!color[v]) {
                     color[v] = 3 - color[u];
                     st.push(v);
@@ -218,7 +221,7 @@ bool bipartite(vector<vector<int>>& adj) {
 int kruskal(vector<vector<int>>& edges, int n) {
     sort(edges.begin(), edges.end());
     int weight = 0;
-    UF uf = UF(n);
+    UF uf      = UF(n);
     for (auto& edge : edges) {
         if (!uf.same_set(edge[1], edge[2])) {
             uf.unite(edge[1], edge[2]);
@@ -229,12 +232,15 @@ int kruskal(vector<vector<int>>& edges, int n) {
 }
 
 /* Toposort khan. */
-vector<int> toposort(int n, vector<vector<int>> &adj) {
+vector<int> toposort(int n, vector<vector<int>>& adj) {
     vector<int> res, stack, p(n);
-    for (int u = 0; u < n; ++u) for (int child : adj[u]) ++p[child];
-    for (int u = 0; u < n; ++u) if (p[u] == 0) stack.push_back(u);
+    for (int u = 0; u < n; ++u)
+        for (int child : adj[u]) ++p[child];
+    for (int u = 0; u < n; ++u)
+        if (p[u] == 0) stack.push_back(u);
     while (!stack.empty()) {
-        int u = stack.back(); stack.pop_back();
+        int u = stack.back();
+        stack.pop_back();
         res.push_back(u);
         for (int v : adj[u]) {
             --p[v];
@@ -245,15 +251,16 @@ vector<int> toposort(int n, vector<vector<int>> &adj) {
     return res;
 }
 
-/* Returns the length of the shortest path from start to every node, or -1 if no path to that node exists. 
+/* Returns the length of the shortest path from start to every node, or -1 if no path to that node exists.
     adj[a] contains a list of pairs { b, w }, meaning a is adjacent to b with weight w */
 vector<int> dijkstra(vector<vector<pair<int, int>>>& adj, int src) {
-    vector<int> dist(adj.size(), INT_MAX); // distance
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q; // { distance, node }
+    vector<int> dist(adj.size(), INT_MAX);                                // distance
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;  // { distance, node }
     dist[src] = 0;
     q.emplace(0, src);
     while (!q.empty()) {
-        auto [du, u] = q.top(); q.pop();
+        auto [du, u] = q.top();
+        q.pop();
         if (du != dist[u]) continue;
         for (auto [v, w] : adj[u]) {
             if (dist[v] > dist[u] + w) {
@@ -270,39 +277,43 @@ vector<int> bellman_ford(vector<vector<pair<int, int>>>& adj, int s) {
     int n = adj.size();
     vector<int> dist(n, INT_MAX / 2);
     dist[s] = 0;
-    for (int i = 0; i < n - 1; ++i) for (int u = 0; u < n; ++u) for (auto [v, w] : adj[u]) dist[v] = min(dist[v], dist[u] + w);
+    for (int i = 0; i < n - 1; ++i)
+        for (int u = 0; u < n; ++u)
+            for (auto [v, w] : adj[u]) dist[v] = min(dist[v], dist[u] + w);
     return dist;
 }
 
 /* Returns shortest distance from node i to node j. Takes a matix of weights as input. s*/
 vector<vector<int>> floyd_warshall(vector<vector<int>>& weight) {
-    int n = weight.size();
+    int n                    = weight.size();
     vector<vector<int>> dist = weight;
-    for (int k = 0; k < n; ++k) for (int i = 0; i < n; ++i) for (int j = 0; j < n; ++j) dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+    for (int k = 0; k < n; ++k)
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j) dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
     return dist;
 }
 
 /* Computes maximum flow using an implementation of the Edmonds-Karp algorithm. */
-template<typename T>
+template <typename T>
 T max_flow(vector<vector<int>>& adj, vector<vector<T>> capacity, int source, int sink) {
     const T INFTY = numeric_limits<T>::max();
-    T flow = 0;
+    T flow        = 0;
     vector<int> parent(adj.size());
-    while (true) {  
+    while (true) {
         fill(parent.begin(), parent.end(), -1);
         parent[source] = -2;
         queue<pair<int, T>> q;
         q.emplace(source, INFTY);
         bool found_path = false;
-        T current_flow = INFTY;
-        while(!q.empty() && !found_path) {
+        T current_flow  = INFTY;
+        while (!q.empty() && !found_path) {
             int current_node = q.front().first;
-            current_flow = q.front().second;
+            current_flow     = q.front().second;
             q.pop();
             for (auto next_node : adj[current_node]) {
                 if (parent[next_node] == -1 && capacity[current_node][next_node]) {
                     parent[next_node] = current_node;
-                    current_flow = min(current_flow, capacity[current_node][next_node]);
+                    current_flow      = min(current_flow, capacity[current_node][next_node]);
                     if (next_node == sink) {
                         found_path = true;
                         break;
@@ -327,18 +338,20 @@ T max_flow(vector<vector<int>>& adj, vector<vector<T>> capacity, int source, int
 /* Tarjan SCC. Initialization:
 u = curnum = compc = 0; num = lowln = comp {-1}; stack = {};
 */
-void SCC(int u, vector<vector<int>> &adj, int &curnum, int &compc, vector<int> &num, vector<int> &lowln, vector<int> &comp, vector<int> &stack) {
+void SCC(int u, vector<vector<int>>& adj, int& curnum, int& compc, vector<int>& num, vector<int>& lowln,
+         vector<int>& comp, vector<int>& stack) {
     stack.push_back(u);
     lowln[u] = num[u] = curnum++;
-    for (int v : adj[u]) {
+    for (int v : adj[u])
         if (num[v] == -1) {
             SCC(v, adj, curnum, compc, num, lowln, comp, stack);
             lowln[u] = min(lowln[u], lowln[v]);
-        } else if (comp[v] == -1) lowln[u] = min(lowln[u], lowln[v]);
-    }
+        } else if (comp[v] == -1)
+            lowln[u] = min(lowln[u], lowln[v]);
     if (num[u] == lowln[u]) {
         for (int v = -1; v != u;) {
-            v = stack.back(); stack.pop_back();
+            v = stack.back();
+            stack.pop_back();
             comp[v] = compc;
         }
         compc++;
@@ -349,13 +362,13 @@ void SCC(int u, vector<vector<int>> &adj, int &curnum, int &compc, vector<int> &
                           String Theory
 \****************************************************************/
 
-int KMP(const string &s, const string &t) {
+int KMP(const string& s, const string& t) {
     int m = t.size();
     vector<int> pi(m + 1);
     pi[0] = 0;
     if (m) pi[1] = 0;
     for (int i = 2; i <= m; ++i) {
-        for (int j = pi[i - 1]; ; j = pi[j]) {
+        for (int j = pi[i - 1];; j = pi[j]) {
             if (t[j] == t[i - 1]) {
                 pi[i] = j + 1;
                 break;
@@ -367,17 +380,19 @@ int KMP(const string &s, const string &t) {
         }
     }
     int count = 0;
-    int n = s.size();
-    for (int i = 0, j = 0; i < n; ) {
+    int n     = s.size();
+    for (int i = 0, j = 0; i < n;) {
         if (s[i] == t[j]) {
-            ++i; ++j;
+            ++i;
+            ++j;
             if (j == m) {
                 ++count;
                 j = pi[j];
             }
-        }
-        else if (j > 0) j = pi[j];
-        else ++i;
+        } else if (j > 0)
+            j = pi[j];
+        else
+            ++i;
     }
     return count;
 }
@@ -387,15 +402,14 @@ typedef struct Trie {
     Trie* child[26];
     bool end;
     bool has_child;
-    Trie() : child{}, end(false), has_child(false) {};
+    Trie() : child{}, end(false), has_child(false) {}
 } Trie;
 
 void trie_insert(Trie* root, string& s) {
     for (auto c : s) {
         root->has_child = true;
         c -= 'a';
-        if (!root->child[c])
-            root->child[c] = new Trie();
+        if (!root->child[c]) root->child[c] = new Trie();
         root = root->child[c];
     }
     root->end = true;
@@ -403,16 +417,14 @@ void trie_insert(Trie* root, string& s) {
 
 void trie_delete(Trie* root) {
     for (Trie* child : root->child)
-        if (child)
-            trie_delete(child);
+        if (child) trie_delete(child);
     delete root;
 }
 
 bool trie_contains(Trie* root, string& s) {
     for (auto c : s) {
         c -= 'a';
-        if (!root->child[c])
-            return false;   
+        if (!root->child[c]) return false;
         root = root->child[c];
     }
     return root->end;
@@ -423,41 +435,35 @@ struct suffix_array {
     struct entry {
         pair<int, int> nr;
         int p;
-        bool operator <(const entry &other) const {
+        bool operator<(const entry& other) const {
             return nr < other.nr;
         }
     };
     string s;
     int n;
-    vector<vector<int> > P;
+    vector<vector<int>> P;
     vector<entry> L;
     vector<int> idx;
-    
+
     suffix_array(string _s) : s(_s), n(s.size()) {
         L = vector<entry>(n);
         P.push_back(vector<int>(n));
         idx = vector<int>(n);
-        for (int i = 0; i < n; i++) {
-            P[0][i] = s[i];
-        }
+        for (int i = 0; i < n; i++) P[0][i] = s[i];
         for (int stp = 1, cnt = 1; (cnt >> 1) < n; stp++, cnt <<= 1) {
             P.push_back(vector<int>(n));
             for (int i = 0; i < n; i++) {
-                L[i].p = i;
+                L[i].p  = i;
                 L[i].nr = make_pair(P[stp - 1][i], i + cnt < n ? P[stp - 1][i + cnt] : -1);
             }
             sort(L.begin(), L.end());
-            for (int i = 0; i < n; i++) {
-                if (i > 0 && L[i].nr == L[i - 1].nr) {
+            for (int i = 0; i < n; i++)
+                if (i > 0 && L[i].nr == L[i - 1].nr)
                     P[stp][L[i].p] = P[stp][L[i - 1].p];
-                } else {
+                else
                     P[stp][L[i].p] = i;
-                }
-            }
         }
-        for (int i = 0; i < n; i++) {
-            idx[P[P.size() - 1][i]] = i;
-        }
+        for (int i = 0; i < n; i++) idx[P[P.size() - 1][i]] = i;
     }
 
     /* Longest common prefix. */
@@ -481,20 +487,20 @@ struct suffix_array {
 
 /* TESTED */
 /* Computes gcd(a, b) and finds x, y such that ax + by = gcd(a, b). */
-long long extgcd(long long a, long long b, long long &x, long long &y) {
+long long extgcd(long long a, long long b, long long& x, long long& y) {
     x = 1, y = 0;
     long long x1 = 0, y1 = 1, q, temp;
     while (b) {
-        q = a / b;
+        q    = a / b;
         temp = x;
-        x = x1;
-        x1 = temp - q * x1;
+        x    = x1;
+        x1   = temp - q * x1;
         temp = y;
-        y = y1;
-        y1 = temp - q * y1;
+        y    = y1;
+        y1   = temp - q * y1;
         temp = a;
-        a = b;
-        b = temp - q * b;
+        a    = b;
+        b    = temp - q * b;
     }
     return a;
 }
@@ -506,22 +512,23 @@ long long crt(vector<long long>& r, vector<long long>& m) {
     for (auto n : m) N *= n;
     for (int i = 0; i < m.size(); ++i) {
         extgcd(N / m[i], m[i], x, y);
-        crt = (crt + N / m[i] * r[i] * x) % N; // % N ensures crt is minimal.
+        crt = (crt + N / m[i] * r[i] * x) % N;  // % N ensures crt is minimal.
     }
-    return crt < 0 ? crt + N : crt; // Ensure crt is positive.
+    return crt < 0 ? crt + N : crt;  // Ensure crt is positive.
 }
 
 /* TESTED */
-/* Returns the smallest non-negative x such that x ≡ r[i] mod m[i] for all i; works with non-coprime m[i], returns -1 if no solution exists. */
+/* Returns the smallest non-negative x such that x ≡ r[i] mod m[i] for all i; works with non-coprime m[i], returns -1 if
+ * no solution exists. */
 long long crt_npc(vector<long long>& r, vector<long long>& m) {
     long long crt = 0, N = 1, g, x, y;
     for (int i = 0; i < m.size(); ++i) {
         g = extgcd(N, m[i], x, y);
-        if ((crt - r[i]) % g) return -1; // No solution exists.
-        N = N / g * m[i];
-        crt = (r[i] + m[i] / g * y * (crt - r[i])) % N; // % N ensures crt is minimal.
+        if ((crt - r[i]) % g) return -1;  // No solution exists.
+        N   = N / g * m[i];
+        crt = (r[i] + m[i] / g * y * (crt - r[i])) % N;  // % N ensures crt is minimal.
     }
-    return crt < 0 ? crt + N : crt; // Ensure crt is positive.
+    return crt < 0 ? crt + N : crt;  // Ensure crt is positive.
 }
 
 /* TESTED */
@@ -541,8 +548,9 @@ unsigned long long modpow(unsigned long long a, unsigned long long b, unsigned l
 /* Returns true if n is prime, false otherwise. */
 bool prime(unsigned long long n) {
     if (n < 3 || n % 2 == 0) return n == 2;
-    if (n == 3 || n == 5 || n == 13 || n == 19 || n == 73 || n == 193 || n == 407521 || n == 299210837) return true; /// two
-    int s = __countr_zero(n - 1), pr[] = { 2, 325, 9375, 28178, 450775, 9780504, 1795265022 }; /// two
+    if (n == 3 || n == 5 || n == 13 || n == 19 || n == 73 || n == 193 || n == 407521 || n == 299210837)
+        return true;                                                                          /// two
+    int s = __countr_zero(n - 1), pr[] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};  /// two
     // int s = __countr_zero(n - 1), pr[] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 }; // one
     unsigned long long d = (n - 1) >> s, x, y;
     for (int p : pr) {
@@ -593,7 +601,7 @@ void factorize(unsigned long long n, map<unsigned long long, int>& fs) {
 \****************************************************************/
 
 /* TESTED ON SEVERAL PROBLEMS */
-/* Double can be replaced with int for INT_SAFE functions. 
+/* Double can be replaced with int for INT_SAFE functions.
 In that case EPS comparisons can be ignonred. */
 typedef double coord;
 struct Point {
@@ -659,8 +667,8 @@ coord cross_product(Point a, Point b) {
 /* INT_SAFE Returns 1 if p lies counter clockwise line, -1 one if it lies clockwise, and 0 otherwise. */
 int ccw(Point a0, Point a1, Point p) {
     const double EPS = 1E-9;
-    coord d1 = (a1.x - a0.x) * (p.y - a0.y);
-    coord d2 = (p.x - a0.x) * (a1.y - a0.y);
+    coord d1         = (a1.x - a0.x) * (p.y - a0.y);
+    coord d2         = (p.x - a0.x) * (a1.y - a0.y);
     return (d1 - d2 > EPS) - (d2 - d1 > EPS);
 }
 
@@ -682,23 +690,24 @@ int on_segment(Point a0, Point a1, Point p) {
     coord cx = (p.x - a0.x) * (p.x - a1.x);
     coord cy = (p.y - a0.y) * (p.y - a1.y);
     if (cx > EPS || cy > EPS) return 0;
-    if (cx < -EPS || cy < -EPS) return 1;   
+    if (cx < -EPS || cy < -EPS) return 1;
     return 2;
 }
 
-/* INT_SAFE Returns 0 if segments do not intersect, 1 if they strictly intersect and 2 if they intersect on end point. */
+/* INT_SAFE Returns 0 if segments do not intersect, 1 if they strictly intersect and 2 if they intersect on end point.
+ */
 int segment_intersect(Point a0, Point a1, Point b0, Point b1) {
     int c1 = ccw(a0, a1, b0), c2 = ccw(a0, a1, b1);
     int c3 = ccw(b0, b1, a0), c4 = ccw(b0, b1, a1);
     if (c1 * c2 > 0 || c3 * c4 > 0) return 0;
-    if ((c1 | c2 | c3 | c4) == 0) { // Two segments lie on the same line.
+    if ((c1 | c2 | c3 | c4) == 0) {  // Two segments lie on the same line.
         c1 = on_segment(a0, a1, b0);
         c2 = on_segment(a0, a1, b1);
         c3 = on_segment(b0, b1, a0);
         c4 = on_segment(b0, b1, a1);
         if (c1 && c2 && c3 && c4) return 2;
         if (!c1 && !c2 && !c3 && !c4) return 0;
-        return max({ c1, c2, c3, c4 });
+        return max({c1, c2, c3, c4});
     }
     return (c1 && c2 && c3 && c4) ? 1 : 2;
 }
@@ -716,17 +725,16 @@ Point line_intersect(Point a0, Point a1, Point b0, Point b1) {
 /* TESTED ON 9E */
 /* INT_SAFE Computes twice the area of poly. */
 coord poly_2area(vector<Point>& poly) {
-    int n = poly.size();
+    int n      = poly.size();
     coord area = 0;
-    for (int i = 0; i < n; ++i)
-        area += (poly[(i + 1) % n].x - poly[i].x) * (poly[(i + 1) % n].y + poly[i].y);
+    for (int i = 0; i < n; ++i) area += (poly[(i + 1) % n].x - poly[i].x) * (poly[(i + 1) % n].y + poly[i].y);
     return abs(area);
 }
 
 /* INT_SAFE Returns 0 if p lies outside poly, 1 if p lies strictly inside poly and 2 if p lies on an edge of poly. */
 int in_convex_poly(vector<Point>& poly, Point p) {
     const double EPS = 1E-9;
-    int n = poly.size();
+    int n            = poly.size();
     coord area2 = poly_2area(poly), parea2 = 0;
     for (int i = 0; i < n; ++i) {
         if (on_segment(poly[i], poly[(i + 1) % n], p)) return 2;
@@ -786,10 +794,9 @@ __int128 i128in() {
     string s;
     cin >> s;
     __int128 res = 0;
-    bool neg = s[0] == '-';
+    bool neg     = s[0] == '-';
     int i = neg, n = s.size();
-    for (; i < n; ++i)
-        res = res * 10 + (s[i] - '0');
+    for (; i < n; ++i) res = res * 10 + (s[i] - '0');
     return neg ? -res : res;
 }
 
@@ -803,8 +810,8 @@ void i128out(__int128 x) {
         cout << '-';
         x = -x;
     }
-    char buf[50] = { 0 };
-    int i = 0;
+    char buf[50] = {0};
+    int i        = 0;
     while (x > 0) {
         buf[i++] = '0' + (x % 10);
         x /= 10;
