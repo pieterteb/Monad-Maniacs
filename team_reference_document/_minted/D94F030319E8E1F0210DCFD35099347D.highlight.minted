@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/* Rotates vector v by phi radians. */}
+\PYG{n}{Point}\PYG{+w}{ }\PYG{n+nf}{rotate}\PYG{p}{(}\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{phi}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{sn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{sin}\PYG{p}{(}\PYG{n}{phi}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{cs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{cos}\PYG{p}{(}\PYG{n}{phi}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{Point}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{x}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cs}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{.}\PYG{n}{y}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{sn}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{.}\PYG{n}{x}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{sn}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{.}\PYG{n}{y}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cs}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

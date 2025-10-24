@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/* Computes projection of p onto line(segment) a0 a1. */}
+\PYG{n}{Point}\PYG{+w}{ }\PYG{n+nf}{closest\PYGZus{}point}\PYG{p}{(}\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{a0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{a1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+cm}{/* For segment instead of line. */}
+\PYG{+w}{    }\PYG{c+c1}{// if ((a0 \PYGZhy{} a1) * (p \PYGZhy{} a0) \PYGZgt{} 0) return a0;}
+\PYG{+w}{    }\PYG{c+c1}{// if ((a1 \PYGZhy{} a0) * (p \PYGZhy{} a1) \PYGZgt{} 0) return a1;}
+\PYG{+w}{    }\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{d}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{a1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{a0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{a0}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{d}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{d}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{a0}\PYG{p}{)}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{d}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{d}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

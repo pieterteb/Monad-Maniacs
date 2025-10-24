@@ -1,0 +1,43 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/* Computes maximum flow using an implementation of the Edmonds\PYGZhy{}Karp algorithm. */}
+\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{typename}\PYG{+w}{ }\PYG{n+nc}{T}\PYG{o}{\PYGZgt{}}
+\PYG{n}{T}\PYG{+w}{ }\PYG{n}{max\PYGZus{}flow}\PYG{p}{(}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{adj}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{capacity}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{source}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{const}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{INFTY}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{numeric\PYGZus{}limits}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{o}{:}\PYG{o}{:}\PYG{n}{max}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{flow}\PYG{+w}{        }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{parent}\PYG{p}{(}\PYG{n}{adj}\PYG{p}{.}\PYG{n}{size}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nb}{true}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{fill}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{parent}\PYG{p}{.}\PYG{n}{end}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{parent}\PYG{p}{[}\PYG{n}{source}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}2}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{q}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{q}\PYG{p}{.}\PYG{n}{emplace}\PYG{p}{(}\PYG{n}{source}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{INFTY}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{found\PYGZus{}path}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{T}\PYG{+w}{ }\PYG{n}{current\PYGZus{}flow}\PYG{+w}{  }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{INFTY}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n}{found\PYGZus{}path}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{current\PYGZus{}node}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{(}\PYG{p}{)}\PYG{p}{.}\PYG{n}{first}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{current\PYGZus{}flow}\PYG{+w}{     }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{(}\PYG{p}{)}\PYG{p}{.}\PYG{n}{second}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{next\PYGZus{}node}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{adj}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{parent}\PYG{p}{[}\PYG{n}{next\PYGZus{}node}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{capacity}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{p}{[}\PYG{n}{next\PYGZus{}node}\PYG{p}{]}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                    }\PYG{n}{parent}\PYG{p}{[}\PYG{n}{next\PYGZus{}node}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{current\PYGZus{}node}\PYG{p}{;}
+\PYG{+w}{                    }\PYG{n}{current\PYGZus{}flow}\PYG{+w}{      }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{min}\PYG{p}{(}\PYG{n}{current\PYGZus{}flow}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{capacity}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{p}{[}\PYG{n}{next\PYGZus{}node}\PYG{p}{]}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{                    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{next\PYGZus{}node}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                        }\PYG{n}{found\PYGZus{}path}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{;}
+\PYG{+w}{                        }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{                    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{                    }\PYG{n}{q}\PYG{p}{.}\PYG{n}{emplace}\PYG{p}{(}\PYG{n}{next\PYGZus{}node}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{current\PYGZus{}flow}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{                }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{            }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{found\PYGZus{}path}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{flow}\PYG{+w}{ }\PYG{o}{+}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{current\PYGZus{}flow}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{current\PYGZus{}node}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{previous\PYGZus{}node}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{current\PYGZus{}node}\PYG{+w}{ }\PYG{o}{!}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{source}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{previous\PYGZus{}node}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{parent}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{capacity}\PYG{p}{[}\PYG{n}{previous\PYGZus{}node}\PYG{p}{]}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{current\PYGZus{}flow}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{capacity}\PYG{p}{[}\PYG{n}{current\PYGZus{}node}\PYG{p}{]}\PYG{p}{[}\PYG{n}{previous\PYGZus{}node}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{current\PYGZus{}flow}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{current\PYGZus{}node}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{previous\PYGZus{}node}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{flow}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

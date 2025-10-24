@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/* INT\PYGZus{}SAFE Computes vector orthogonal to v. */}
+\PYG{n}{Point}\PYG{+w}{ }\PYG{n+nf}{orth}\PYG{p}{(}\PYG{n}{Point}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{Point}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{y}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{v}\PYG{p}{.}\PYG{n}{x}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}
