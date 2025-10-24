@@ -82,9 +82,6 @@ INPUT /usr/share/texmf-dist/tex/latex/graphics/mathcolor.ltx
 INPUT /usr/share/texmf-dist/tex/latex/graphics/mathcolor.ltx
 INPUT /usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT /usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-INPUT ./main.aux
-INPUT ./main.aux
-INPUT main.aux
 OUTPUT main.aux
 INPUT /usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -94,6 +91,15 @@ INPUT /usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 INPUT /usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT ./universiteit-van-amsterdam-logo-png-transparent-2300688522.png
+INPUT ./universiteit-van-amsterdam-logo-png-transparent-2300688522.png
+INPUT ./universiteit-van-amsterdam-logo-png-transparent-2300688522.png
+INPUT ./universiteit-van-amsterdam-logo-png-transparent-2300688522.png
+OUTPUT main.pdf
+INPUT ./universiteit-van-amsterdam-logo-png-transparent-2300688522.png
+INPUT /usr/share/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 OUTPUT _FAD58DE7366495DB4650CFEFAC2FCD61.data.minted
 INPUT ./_FAD58DE7366495DB4650CFEFAC2FCD61.config.minted
 INPUT ./_FAD58DE7366495DB4650CFEFAC2FCD61.config.minted
@@ -106,7 +112,6 @@ INPUT _minted/default.style.minted
 INPUT ./_minted/26C30F5A69489AE0E8F3D4D9171D6693.highlight.minted
 INPUT ./_minted/26C30F5A69489AE0E8F3D4D9171D6693.highlight.minted
 INPUT _minted/26C30F5A69489AE0E8F3D4D9171D6693.highlight.minted
-INPUT /usr/share/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmitt10.tfm
@@ -120,9 +125,7 @@ INPUT ./University-of-amsterdam-3012137660.jpg
 INPUT ./University-of-amsterdam-3012137660.jpg
 INPUT ./University-of-amsterdam-3012137660.jpg
 INPUT ./University-of-amsterdam-3012137660.jpg
-OUTPUT main.pdf
 INPUT ./University-of-amsterdam-3012137660.jpg
-INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT ./_minted/03BDA9AD441360DBB35F870CFFA3A335.highlight.minted
 INPUT ./_minted/03BDA9AD441360DBB35F870CFFA3A335.highlight.minted
 INPUT _minted/03BDA9AD441360DBB35F870CFFA3A335.highlight.minted
@@ -277,4 +280,5 @@ OUTPUT _FAD58DE7366495DB4650CFEFAC2FCD61.data.minted
 INPUT main.aux
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
