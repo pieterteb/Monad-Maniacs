@@ -7,30 +7,33 @@ struct UF {
     vector<int> par, rank, size;
     int setc;
     UF(int n) : par(n), rank(n, 0), setc(n), size(n, 1) {
-        for (int i = 0; i < n; ++i) par[i] = i;
+        for (int i = 0; i < n; ++i)
+            par[i] = i;
     }
 
     int root(int u) {
         int r = par[u];
-        if (u == r) return r;
+        if (u == r)
+            return r;
         return par[u] = root(r);
     }
 
     void unite(int u, int v) {
         int ru = root(u);
         int rv = root(v);
-        if (ru == rv) return;
+        if (ru == rv)
+            return;
         --setc;
         if (rank[ru] < rank[rv]) {
             par[ru] = rv;
-            size[ru] += size[rv];
+            size[rv] += size[ru];
         } else if (rank[ru] > rank[rv]) {
             par[rv] = ru;
-            size[rv] += size[ru];
+            size[ru] += size[rv];
         } else {
             par[rv] = ru;
             ++rank[ru];
-            size[rv] += size[ru];
+            size[ru] += size[rv];
         }
     }
 
