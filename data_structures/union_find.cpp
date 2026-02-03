@@ -4,9 +4,9 @@ using namespace std;
 
 /* Union Find data structure. */
 struct UF {
-    vector<int> par, rank, size;
+    vector<int> par, rank;
     int setc;
-    UF(int n) : par(n), rank(n, 0), setc(n), size(n, 1) {
+    UF(int n) : par(n), rank(n, 0), setc(n) {
         for (int i = 0; i < n; ++i) par[i] = i;
     }
 
@@ -23,14 +23,11 @@ struct UF {
         --setc;
         if (rank[ru] < rank[rv]) {
             par[ru] = rv;
-            size[rv] += size[ru];
         } else if (rank[ru] > rank[rv]) {
             par[rv] = ru;
-            size[ru] += size[rv];
         } else {
             par[rv] = ru;
             ++rank[ru];
-            size[ru] += size[rv];
         }
     }
 
@@ -38,7 +35,7 @@ struct UF {
         return root(u) == root(v);
     }
 
-    int set_size(int u) {
-        return size[root(u)];
+    int set_count() {
+        return setc;
     }
 };
