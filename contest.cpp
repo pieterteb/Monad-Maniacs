@@ -336,7 +336,7 @@ T max_flow(vector<vector<int>>& adj, vector<vector<T>> capacity, int source, int
 }
 
 /* Tarjan SCC. Initialization:
-u = curnum = compc = 0; num = lowln = comp {-1}; stack = {};
+u = curnum = compc = 0; num = lowln = comp = {-1}; stack = {};
 */
 void SCC(int u, vector<vector<int>>& adj, int& curnum, int& compc, vector<int>& num, vector<int>& lowln,
          vector<int>& comp, vector<int>& stack) {
