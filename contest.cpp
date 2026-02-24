@@ -545,7 +545,7 @@ unsigned long long modpow(unsigned long long a, unsigned long long b, unsigned l
 }
 
 /* TESTED */
-/* Returns true if n is prime, false otherwise. */
+/* Returns true if n is prime, false otherwise. O(log(n)^3) */
 bool prime(unsigned long long n) {
     if (n < 3 || n % 2 == 0) return n == 2;
     if (n == 3 || n == 5 || n == 13 || n == 19 || n == 73 || n == 193 || n == 407521 || n == 299210837)
