@@ -362,6 +362,9 @@ void SCC(int u, vector<vector<int>>& adj, int& curnum, int& compc, vector<int>& 
                           String Theory
 \****************************************************************/
 
+/* Not tested: 
+Returns the amount of occurences of t in s. 
+Worst case: O(s.size() + t.size())*/
 int KMP(const string& s, const string& t) {
     int m = t.size();
     vector<int> pi(m + 1);
